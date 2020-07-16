@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1946759_jbpgzm3musp.css">
+    <link rel="stylesheet" href="../static/css/me.css">
+    <link rel="stylesheet" href="../static/lib/swiper/css/swiper.min.css">
+    <link rel="Shortcut Icon" href="../static/images/icon.png" type="image/x-icon"/>
+    <title>首页 | 曲奇曲怪</title>
+</head>
+<body>
+<nav th:replace="_fragments :: menu(1)" class="ui teal inverted attached segment m-padding-tb-mini m-border m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui header item"><img src="../static/images/icon.png" class="image ui large">曲奇曲怪</h2>
+            <a href="/" class="item m-item m-mobile-hide active"><i class="small home icon"></i>&nbsp;首页</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small image icon"></i>&nbsp;图库</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small info icon"></i>&nbsp;关于我们</a>
+        </div>
+    </div>
+    <button class="ui teal icon button m-sidebar m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </button>
+</nav>
+
+<div class="m-container m-padded-tb-big">
+        <div class="ui three column grid stackable container">
+            <div class="ui column" th:each="gift : ${gifts}">
+                <a class="ui card m-card-center" href="#" th:href="@{/detail/{id}(id=${gift.id})}">
+                    <div class="ui ribbon label m-card-label" th:text="${gift.state}"
+                         th:classappend="${gift.auditFlag} ? 'orange' : (${gift.achieveFlag} ? 'blue' : 'red')">已完成</div>
+                    <div class="image">
+                        <img src="../static/images/lena.png" th:src="@{${gift.firstPicUrl}}" class="ui image m-image">
+                    </div>
+                    <div class="content">
+                        <div class="header">￥<span th:text="${gift.integral}">100</span></div>
+                        <div class="meta">
+                            <span class="right floated time"><i class="calendar teal icon"></i><span th:text="${#calendars.format(gift.createTime, 'yyyy-MM-dd')}">2017-01-10</span></span>
+                            <span class="user"><i class="user teal icon"></i><span th:text="${gift.publishUser.nickName}">蒙佳琪</span></span>
+                        </div>
+
+                        <div class="description" th:text="${gift.title}">
+                            innisfree/悦诗风吟蜜吻真彩唇膏口红哑光丝绒 9号温婉杜鹃 持久
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <i class="tasks icon"></i>条件：<span th:text="${gift.task}">完成教师资格证</span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+<footer th:replace="_fragments :: footer" class="ui teal inverted vertical segment m-padding-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="five wide column">
+                <h4 class="ui inverted header">最新文章</h4>
+                <div class="ui inverted link list">
+                    <span>
+                        <a href="#" class="item">用户故事（User Story）</a>
+                    </span>
+                    <!--/*-->
+                    <a href="#" class="item">用户故事（User Story）</a>
+                    <a href="#" class="item">用户故事（User Story）</a>
+                    <!--*/-->
+                </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header">友情链接</h4>
+                <div class="ui inverted link list">
+                    <div class="ui">
+                        <a href="#" class="item">曲怪曲怪</a>
+                        &nbsp;
+                        <a href="#" class="item">曲奇曲奇</a>
+                    </div>
+                    <a href="#" class="item">日志</a>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted header">曲奇曲怪 简介</h4>
+                <p class="item m-opacity-mini">曲奇是臭猪，曲怪是香猪，嘿嘿哈嘿!!!</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-footer-text">Copyright © 2020 - 2020 &nbsp;&nbsp; <b class="ui header grey">曲奇曲怪</b> &nbsp;&nbsp;Designed
+            by LiYang</p>
+    </div>
+</footer>
+<!--<canvas id="world" style="z-index: -1; position: absolute"></canvas>-->
+<!--<canvas id="screen" style="z-index: -10; position:absolute;"></canvas>-->
+
+<!--/*/<th:block th:replace="_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<script src="../static/lib/swiper/js/swiper.min.js"> </script>
+<script>
+    $('.m-sidebar').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+</script>
+<!--/*/</th:block>/*/-->
+<script>
+    $('.footer-container').load(/*[[@{/footer}]]*/"/footer");
+</script>
+</body>
+</html>

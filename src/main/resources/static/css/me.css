@@ -1,0 +1,296 @@
+body {
+    background: url("../images/background/concrete-texture.png");
+    overflow: hidden;
+}
+
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+nav {
+    flex: 0 0 auto !important;
+}
+
+footer {
+    flex: 0 0 auto;
+}
+
+.m-padding-tb-mini {
+    padding-top: 0.2em !important;
+    padding-bottom: 0.2em !important;
+}
+
+.m-padding-tb-small {
+    padding-top: 0.5em !important;
+    padding-bottom: 0.5em !important;
+}
+
+.m-padding-tb-massive {
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
+}
+
+.m-padded-tb-big {
+    padding-top: 3em !important;
+    padding-bottom: 3em !important;
+}
+
+.m-padding-tb {
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
+}
+
+.m-footer-text {
+    font-weight: 300 !important;
+    letter-spacing: 1px !important;
+    line-height: 1.8;
+}
+
+.m-detail-text {
+    letter-spacing: 1px !important;
+    line-height: 1.8;
+    font-weight: bold !important;
+}
+
+.m-border {
+    border-top-width: 0 !important;
+    border-bottom-width: 0 !important;
+}
+
+.m-shadow-small {
+    -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) ! important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) ! important;
+}
+
+.m-container {
+    flex: 1 0 auto !important;
+    max-width: 85em !important;
+    margin: auto !important;
+}
+
+.m-container-publish {
+    flex: 1 0 auto !important;
+    max-width: 75em !important;
+    margin: auto !important;
+}
+
+.m-detail-container {
+    flex: 1 0 auto !important;
+    max-width: 70em !important;
+    margin: auto !important;
+}
+
+.m-container-blog {
+    flex: 1 0 auto !important;
+    max-width: 100em !important;
+    margin: auto !important;
+}
+
+.m-container-small {
+    flex: 1 0 auto !important;
+    max-width: 60em !important;
+    margin: auto !important;
+}
+
+.m-card-center {
+    margin: 0 auto !important;
+}
+
+.m-image {
+    height: 260px !important;
+    object-fit: cover;
+}
+
+.m-image-publish {
+    height: 400px !important;
+    object-fit: cover;
+}
+
+.m-detail-image {
+    height: 400px !important;
+    object-fit: cover;
+}
+
+.m-publish-image {
+    height: auto !important;
+    width: 100%;
+    object-fit: cover;
+}
+
+.m-right-top {
+    position: absolute;
+    top: 25px;
+    right: 0;
+    z-index: 5;
+}
+
+.m-mobile-show {
+    display: none !important;
+}
+
+
+@media screen and (max-width: 768px) {
+    .m-mobile-hide {
+        display: none !important;
+    }
+
+    .m-mobile-hide-always {
+        display: none !important;
+    }
+
+    .m-mobile-show {
+        display: block !important;
+    }
+}
+
+.m-icon {
+    margin-right: 10px !important;
+}
+
+.m-padded-zero {
+    padding: 0 !important;
+}
+
+.m-detail-suo {
+    height: 150px !important;
+    object-fit: cover;
+}
+
+.m-inline-block {
+    display: inline-block !important;
+}
+
+.m-font {
+    font-family: "Courier New", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+}
+
+.swiper-container {
+    width: auto;
+    height: 580px;
+}
+
+.m-publish-swiper-container {
+    width: auto !important;
+    height: 400px !important;
+}
+
+.m-margin-top {
+    margin-top: 1em !important;
+}
+
+.m-margin-top-large {
+    margin-top: 1.5em !important;
+}
+
+.m-margin-tb-large {
+    margin-top: 1.5em !important;
+    margin-bottom: 1em !important;
+}
+
+.m-margin-bottom-large {
+    margin-bottom: 1em !important;
+}
+
+.m-margin-top-big {
+    margin-top: 2em !important;
+}
+
+
+.right-swiper .swiper-button-prev {
+    position: absolute !important;
+    transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    left: 40% !important;
+    top: 3% !important;
+}
+
+.right-swiper .swiper-button-next {
+    position: absolute !important;
+    transform: rotate(90deg) !important;
+    -ms-transform: rotate(90deg) !important;
+    -moz-transform: rotate(90deg) !important;
+    -webkit-transform: rotate(90deg) !important;
+    -o-transform: rotate(90deg) !important;
+    left: 40% !important;
+    top: 97% !important;
+}
+
+.swiper-container {
+    --swiper-navigation-color: #107db2; /* 单独设置按钮颜色 */
+    --swiper-navigation-size: 40px; /* 设置按钮大小 */
+}
+
+.swiper-slide {
+    background-size: cover;
+    background-position: center;
+}
+
+.gallery-top {
+    height: 410px;
+    width: 100%;
+}
+
+.gallery-thumbs {
+    height: 100px;
+    box-sizing: border-box;
+    padding: 10px 0 !important;
+}
+
+.gallery-thumbs .swiper-slide {
+    width: 25%;
+    height: 100%;
+    opacity: 0.4;
+}
+
+.gallery-thumbs .swiper-slide-thumb-active {
+    opacity: 1;
+}
+
+.m-pic-item {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+.index-icon {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.m-publish-message {
+    position: fixed !important;
+    top: 15% !important;
+    right: 5px !important;
+    min-width: 180px !important;
+    z-index: 5 !important;
+}
+
+.m-tbody-tr {
+    height: 50px;
+}
+
+.m-card-label {
+    min-width: 80px !important;
+    position: absolute !important;
+    top: 5% !important;
+    left: -5% !important;
+    z-index: 100 !important;
+}
+
+
+.m-label-show {
+    display: block;
+}
+
+.m-label-hidden {
+    display: none;
+}

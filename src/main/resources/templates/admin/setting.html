@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人资料</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+    <link rel="Shortcut Icon" href="../../static/images/icon.png" type="image/x-icon"/>
+</head>
+<body>
+
+<div class="ui compact success message animated slideInRight m-publish-message"
+     th:unless="${#strings.isEmpty(message)}">
+    <i class="close icon"></i>
+    <div class="header">提示</div>
+    <p th:text="${message}">恭喜操作成功</p>
+</div>
+
+<!--导航-->
+<nav th:replace="admin/_fragments :: menu(8, ${session.user})" class="ui teal inverted attached segment m-padding-tb-mini m-border m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui header item"><img src="../../static/images/icon.png" class="image ui large">曲奇曲怪</h2>
+            <a href="/" class="item m-item m-mobile-hide"><i class="small home icon"></i>&nbsp;首页</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small bell icon"></i>&nbsp;任务审核</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small volume up icon"></i>&nbsp;任务发布</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small gift icon"></i>&nbsp;礼物</a>
+            <div class="right m-item menu m-mobile-hide-always">
+                <div class="ui hidden divider"></div>
+                <div class="right m-item menu">
+                    <a href="/" target="_blank" class="item index-icon"><i class="linkify icon"></i></a>
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img src="https://picsum.photos/id/1/100/100?image=1" id="nav-avatar" alt="" class="ui avatar image">
+                            userName
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" class="item" th:href="@{/admin/setting}"><i class="blue mini user icon"></i>个人资料</a>
+                            <a href="#" class="item" th:href="@{/admin/logout}"><i class="blue mini power icon"></i>退出登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="ui teal icon button m-sidebar m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </button>
+</nav>
+
+<div class="ui container m-margin-top-large">
+    <div class="ui stackable grid">
+        <!--  左边内容-->
+        <div class="five wide column m-margin-top-large">
+            <div class="ui card">
+                <div class="image">
+                    <div class="ui m-dimmer dimmer">
+                        <div class="content">
+                            <input type="file" id="uploadImage" name="uploadImage" style="display: none"
+                                   onchange="sendImage()">
+                            <a class="ui primary fluid button" onclick="document.getElementById('uploadImage').click()">修改头像</a>
+                        </div>
+                    </div>
+                    <img src="../../static/images/lena.png" th:src="@{${setting.getAvatar()}}" id="avatar">
+                </div>
+                <div class="content">
+                    <a class="header" th:text="${setting.nickName}">曲怪曲怪</a>
+                    <div class="meta">
+                        <span class="date">Joined in <span th:text="${#dates.format(setting.getCreateTime(), 'yyyy')}">2014</span></span>
+                    </div>
+                    <div class="description" th:text="${setting.description}">
+                        喜欢把分享当成乐趣
+                    </div>
+                </div>
+                <div class="extra content">
+                    <a>
+                        <i class="envelope icon"></i>
+                         <span th:text="${setting.email}"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--   右边标签-->
+        <div class="eleven wide column">
+            <div class="ui raised segment">
+                <div class="ui pointing menu">
+                    <a id="selfMessage" class="active item" href="#"><i class="user icon"></i>个人信息</a>
+                    <a id="userPassword" class="item" href="#"><i class="lock icon"></i>密码</a>
+                </div>
+
+                <div id="label-message" class="ui secondary segment form m-padded-big m-label-show">
+                    <form action="#" class="ui form" th:object="${setting}" method="post"
+                          th:action="@{/admin/setting}">
+                        <div class="field">
+                            <label>用户名：</label>
+                            <input type="text" placeholder="请输入用户名" name="userName" th:value="*{userName}">
+                        </div>
+                        <div class="field">
+                            <label>昵称：</label>
+                            <input type="text" placeholder="请输入昵称" name="nickName" th:value="*{nickName}">
+                        </div>
+
+                        <div class="field">
+                            <label>邮箱：</label>
+                            <input type="email" placeholder="请输入邮箱" name="email" th:value="*{email}">
+                        </div>
+                        <div class="field">
+                            <label>个人简介：</label>
+                            <textarea rows="3" placeholder="请输入个人简介" name="description" th:text="*{description}"></textarea>
+                        </div>
+                        <button class="ui submit button blue">保存</button>
+                        <div class="ui error message"></div>
+                    </form>
+                </div>
+
+                <div id="label-password" class="ui secondary segment form m-padded-big m-label-hidden">
+                    <form action="#" class="ui form" th:object="${setting}" method="post"
+                          th:action="@{/admin/setting/password}">
+                        <div class="field">
+                            <label>原密码：</label>
+                            <input type="password" placeholder="原密码" name="oldPassword">
+                        </div>
+                        <div class="field">
+                            <label>新密码：</label>
+                            <input type="password" placeholder="新密码" name="newPassword">
+                        </div>
+
+                        <div class="field">
+                            <label>确认密码：</label>
+                            <input type="password" placeholder="确认密码" name="newPasswordEdit">
+                        </div>
+                        <button class="ui submit button blue">提交</button>
+                        <div class="ui error message"></div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<!--/*/</th:block>/*/-->
+<script src="../../static/js/ajaxfileupload.js" th:src="@{/js/ajaxfileupload.js}" type="text/javascript"></script>
+<script>
+    $('#userPassword').click(function () {
+        $('#selfMessage').removeClass("active");
+        $('#userPassword').addClass("active");
+
+        $('#label-message').removeClass('m-label-show');
+        $('#label-message').addClass('m-label-hidden');
+
+        $('#label-password').removeClass('m-label-hidden');
+        $('#label-password').addClass('m-label-show');
+
+    });
+    $('#selfMessage').click(function () {
+        $('#userPassword').removeClass("active");
+        $('#selfMessage').addClass("active");
+
+        $('#label-message').removeClass('m-label-hidden');
+        $('#label-message').addClass('m-label-show');
+
+        $('#label-password').removeClass('m-label-show');
+        $('#label-password').addClass('m-label-hidden');
+    });
+
+    $('.ui.form')
+        .form({
+                on: 'blur',
+                fields: {
+                    match: {
+                        identifier: 'newPassword',
+                        rules: [
+                            {
+                                type: 'match[newPasswordEdit]',
+                                prompt: '请输入相同密码'
+                            }
+                        ]
+                    },
+                    password: {
+                        identifier: 'oldPassword',
+                        rules: [{
+                            type: 'empty',
+                            prompt: '密码不能为空'
+                        }]
+                    },
+                    newPassword: {
+                        identifier: 'newPassword',
+                        rules: [{
+                            type: 'empty',
+                            prompt: '密码不能为空'
+                        },
+                            {
+                                type: 'minLength[6]',
+                                prompt: '密码要求至少6位'
+                            }]
+                    },
+                    newPasswordEdit: {
+                        identifier: 'newPasswordEdit',
+                        rules: [{
+                            type: 'empty',
+                            prompt: '密码不能为空'
+                        }]
+                    },
+                    userName: {
+                        identifier: 'userName',
+                        rules: [{
+                            type: 'empty',
+                            prompt: '用户名不能为空'
+                        }]
+                    },
+                    nickName: {
+                        identifier: 'nickName',
+                        rules: [{
+                            type: 'empty',
+                            prompt: '昵称不能为空'
+                        }]
+                    },
+                    email: {
+                        identifier: 'email',
+                        rules: [{
+                            type: 'empty',
+                            prompt: '邮箱不能为空'
+                        }]
+                    }
+
+                }
+            }
+        );
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+
+    $('.m-dimmer')
+        .dimmer({
+            on: 'hover'
+        });
+</script>
+<script>
+    function sendImage() {
+        $.ajaxFileUpload(
+            {
+                url: '/admin/uploadAvatar', //用于文件上传的服务器端请求地址
+                secureuri: false, //是否需要安全协议，一般设置为false
+                fileElementId: 'uploadImage', //文件上传域的ID
+                dataType: 'json', //返回值类型 一般设置为json
+                success: function (data, status)  //服务器成功响应处理函数
+                {
+                    console.log(data);
+                    $('#avatar').attr("src", data.url);
+                    $('#nav-avatar').attr("src", data.url);
+                },
+                error: function (data, status, e)//服务器响应失败处理函数
+                {
+                    alert(e);
+                }
+            }
+        );
+        return false;
+    }
+</script>
+</body>
+</html>

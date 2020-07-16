@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+    <link rel="stylesheet" href="../../static/lib/swiper/css/swiper.css">
+    <link rel="Shortcut Icon" href="../../static/images/icon.png" type="image/x-icon"/>
+    <title>首页 | 详情</title>
+</head>
+<body>
+<nav th:replace="admin/_fragments :: menu(0, ${session.user})" class="ui teal inverted attached segment m-padding-tb-mini m-border m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui header item"><img src="../../static/images/icon.png" class="image ui large">曲奇曲怪</h2>
+            <a href="/" class="item m-item m-mobile-hide"><i class="small home icon"></i>&nbsp;首页</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small bell icon"></i>&nbsp;任务审核</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small volume up icon"></i>&nbsp;任务发布</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small gift icon"></i>&nbsp;礼物</a>
+            <div class="right m-item menu m-mobile-hide-always">
+                <div class="ui hidden divider"></div>
+                <div class="right m-item menu">
+                    <a href="/" target="_blank" class="item index-icon"><i class="linkify icon"></i></a>
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img src="https://picsum.photos/id/1/100/100?image=1" alt="" class="ui avatar image">
+                            userName
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" class="item" th:href="@{/admin/setting}"><i class="blue mini user icon"></i>个人资料</a>
+                            <a href="#" class="item" th:href="@{/admin/logout}"><i class="blue mini power icon"></i>退出登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="ui teal icon button m-sidebar m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </button>
+</nav>
+<div class="ui compact success message animated slideInRight m-publish-message" th:unless="${#strings.isEmpty(message)}">
+    <i class="close icon"></i>
+    <div class="header">提示</div>
+    <p th:text="${message}">恭喜操作成功</p>
+</div>
+<div>
+    <div class="m-container m-padded-tb-big">
+        <div class="ui container">
+            <div class="ui stackable grid">
+                <div class="six wide column">
+                    <div class="swiper-container gallery-top">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" th:each="pic : ${gift.giftPictures}"
+                                 style="background-image:url(../../static/images/lena.png)"
+                                 th:style="'background-image:url(' + @{${pic.picUrl}} + ')'">
+                            </div>
+                        </div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next swiper-button-white"></div>
+                        <div class="swiper-button-prev swiper-button-white"></div>
+                    </div>
+                    <div class="swiper-container gallery-thumbs">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" th:each="pic : ${gift.giftPictures}"
+                                 style="background-image:url(../../static/images/lena.png)"
+                                 th:style="'background-image:url(' + @{${pic.picUrl}} + ')'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="six wide column">
+                    <div class="ui top attached padded segment">
+                        <h3 class="ui header m-detail-text" th:text="${gift.title}">innisfree/悦诗风吟蜜吻真彩唇膏口红哑光丝绒 9号温婉杜鹃 持久</h3>
+                    </div>
+                    <div class="ui attached tertiary segment">
+                        <div>所需积分：&emsp;<span class="ui header red">￥</span>
+                            <span class="ui header red" style="font-size: 30px!important;" th:text="${gift.integral}">50</span>
+                        </div>
+                    </div>
+                    <div class="ui attached segment">
+                        <div><i class="ui large tasks icon m-icon"></i>要求：<span class="ui header" th:text="${gift.task}">完成教师资格证</span></div>
+
+                    </div>
+                    <div class="ui attached segment">
+                        <div><i class="ui large calendar icon m-icon"></i>发布时间：<span class="ui header" th:text="${#calendars.format(gift.createTime, 'yyyy-MM-dd')}">2019-01-01</span></div>
+
+                    </div>
+                    <div class="ui attached segment">
+                        <div><i class="ui large user icon m-icon"></i>发布人：<span class="ui header" th:text="${gift.publishUser.nickName}">李扬</span></div>
+                    </div>
+                    <div class="ui attached segment">
+                        <a class="ui red button"
+                           th:href="@{/admin/detail/{id}/submit(id=${gift.id})}"
+                           th:text="${gift.achieveFlag} ? ${gift.state} : '提交审核'"
+                           th:classappend="${gift.achieveFlag} ? 'disabled' : ''">提交审核</a>
+                    </div>
+                </div>
+                <div class="three wide column" th:unless="${gifts} == null">
+                    <div class="ui basic segments">
+                        <div class="swiper-container right-swiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" th:each="gift : ${gifts}">
+                                    <a href="#" th:href="@{/admin/detail/{id}(id=${gift.id})}">
+                                        <div class="ui segment m-padded-zero">
+                                            <div class="image">
+                                                <img src="../../static/images/lena.png" th:src="@{${gift.firstPicUrl}}" alt="" class="ui fluid image m-detail-suo">
+                                            </div>
+                                            <div align="center">￥<span th:text="${gift.integral}">50</span></div>
+                                            <div align="center" th:text="${gift.task}">教师资格证</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="swiper-slide" th:each="gift : ${gifts}">
+                                    <a href="#" th:href="@{/admin/detail/{id}(id=${gift.id})}">
+                                        <div class="ui segment m-padded-zero">
+                                            <div class="image">
+                                                <img src="../../static/images/lena.png" th:src="@{${gift.firstPicUrl}}" alt="" class="ui fluid image m-detail-suo">
+                                            </div>
+                                            <div align="center">￥<span th:text="${gift.integral}">50</span></div>
+                                            <div align="center" th:text="${gift.task}">教师资格证</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="swiper-slide" th:each="gift : ${gifts}">
+                                    <a href="#" th:href="@{/admin/detail/{id}(id=${gift.id})}">
+                                        <div class="ui segment m-padded-zero">
+                                            <div class="image">
+                                                <img src="../../static/images/lena.png" th:src="@{${gift.firstPicUrl}}" alt="" class="ui fluid image m-detail-suo">
+                                            </div>
+                                            <div align="center">￥<span th:text="${gift.integral}">50</span></div>
+                                            <div align="center" th:text="${gift.task}">教师资格证</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="../../static/lib/swiper/js/swiper.js"> </script>
+<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<script>
+    $('.m-sidebar').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.ui.dropdown').dropdown({
+        on: 'hover',
+        clearable: true
+    });
+    $('.message .close')
+        .on('click', function () {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+</script>
+<!--/*/</th:block>/*/-->
+
+<script>
+    var mySwiper = new Swiper ('.right-swiper', {
+        direction: 'vertical', // 垂直切换选项
+        loop: true, // 循环模式选项
+        slidesPerView: 3,
+        mousewheel: true,
+        effect : 'coverflow',
+        centeredSlides: true,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        coverflowEffect: {
+            stretch: 0,
+            depth: 80,
+            slideShadows : false
+        },
+    });
+</script>
+<script>
+    var galleryThumbs = new Swiper('.gallery-thumbs', {
+        spaceBetween: 10,
+        slidesPerView: 4,
+        freeMode: true,
+        loopedSlides: 5,
+        watchSlidesVisibility: true,
+        watchSlidesProgress: true,
+    });
+    var galleryTop = new Swiper('.gallery-top', {
+        spaceBetween: 10,
+        loopedSlides: 5,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        thumbs: {
+            swiper: galleryThumbs
+        }
+    });
+</script>
+</body>
+</html>

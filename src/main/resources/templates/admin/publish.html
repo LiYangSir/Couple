@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+    <link rel="stylesheet" href="../../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="Shortcut Icon" href="../../static/images/icon.png" type="image/x-icon"/>
+    <title>管理 | 任务发布</title>
+</head>
+<body>
+<div class="ui compact success message animated slideInRight m-publish-message"
+     th:unless="${#strings.isEmpty(message)}">
+    <i class="close icon"></i>
+    <div class="header">提示</div>
+    <p th:text="${message}">恭喜操作成功</p>
+</div>
+<nav th:replace="admin/_fragments :: menu(3, ${session.user})"
+     class="ui teal inverted attached segment m-padding-tb-mini m-border m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui header item"><img src="../../static/images/icon.png" class="image ui large">曲奇曲怪</h2>
+            <a href="/" class="item m-item m-mobile-hide"><i class="small home icon"></i>&nbsp;首页</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small bell icon"></i>&nbsp;任务审核</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small volume up icon"></i>&nbsp;任务发布</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small gift icon"></i>&nbsp;礼物</a>
+            <div class="right m-item menu m-mobile-hide">
+                <div class="ui hidden divider"></div>
+                <div class="right m-item menu m-mobile-hide-always">
+                    <a href="/" target="_blank" class="item index-icon"><i class="linkify icon"></i></a>
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img src="https://picsum.photos/id/1/100/100?image=1" alt="" class="ui avatar image">
+                            userName
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" class="item" th:href="@{/admin/setting}"><i class="blue mini user icon"></i>个人资料</a>
+                            <a href="#" class="item" th:href="@{/admin/logout}"><i class="blue mini power icon"></i>退出登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="ui teal icon button m-sidebar m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </button>
+</nav>
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" th:href="@{/admin/publish/input}" class="item">发布</a>
+            <a class="active teal item">列表</a>
+        </div>
+    </div>
+</div>
+
+<div class="m-container m-padded-tb-big">
+    <div class="ui container">
+        <div class="ui secondary segment form">
+            <input type="hidden" name="page">
+            <div class="ui stackable middle aligned  grid">
+                <div class="ui eleven wide column">
+                    <div class="inline fields" style="margin: 0 auto">
+                        <div class="field">
+                            <input type="text" class="ui" placeholder="任务" name="task">
+                        </div>
+                        <div class="field">
+                            <div class="ui labeled action input">
+                                <select class="ui type dropdown" name="keyword">
+                                    <option value="">关键字</option>
+                                    <option th:each="keyword : ${keywords}" th:value="${keyword.getName()}"
+                                            th:text="${keyword.getName()}">口红
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" id="published" name="published">
+                                <label for="published">已发布</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <a type="button" id="search-btn" class="ui basic mini button"><i class="search icon"></i>搜索</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui five wide column right aligned">
+                    <div class="field">
+                        <a type="button" th:href="@{/admin/publish/input}" class="ui blue mini button"><i
+                                class="add icon"></i>新增</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="table-container">
+            <table th:fragment="giftList" class="ui single line  table center aligned">
+
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>任务</th>
+                    <th>状态</th>
+                    <th>关键字</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="m-tbody-tr" th:each="gift, iterStat : ${page.content}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${gift.title}">完成教师资格证考试</td>
+                    <td>
+                        <i class="circle tiny icon" th:classappend="${gift.publishFlag} ? 'teal' : 'grey'"
+                           style="margin-right: 10px"></i>
+                        <span th:text="${gift.publishFlag} ?'已发布':'未发布'">已发布</span></td>
+                    <td th:text="${gift.keyword.name}">口红</td>
+                    <td th:text="${gift.updateTime}">2020-02-01 09:45</td>
+                    <td>
+                        <a href="#" th:href="@{/admin/publish/{id}/input(id=${gift.id})}" class="extra content"> 编辑</a>
+                        <i>|</i>
+                        <a href="#" th:href="@{/admin/publish/{id}/delete(id=${gift.id})}"> 删除</a>
+                    </td>
+                    <!-- <a href="#" class="ui mini green divided">设置</a> <i>|</i>-->
+                </tr>
+                </tbody>
+                <tbody>
+                <tr class="m-tbody-tr">
+                    <td colspan="6" class="center aligned">
+                        <div class="ui pagination menu center aligned">
+                            <a onclick="page(this)"
+                               th:attr="data-page=${page.number} > 0 ? (${page.number}-1) : ${page.number}" class="item"
+                               th:classappend="${page.number} > 0 ? '': 'disabled'">
+                                <i class="left chevron icon"></i>
+                            </a>
+                            <a onclick="page(this)"
+                               th:each="i: ${#numbers.sequence(1,page.getTotalPages() == 0 ? 1 : page.getTotalPages())}"
+                               th:attr="data-page=${i}-1" class="item" th:text="${i}">1</a>
+                            <a onclick="page(this)"
+                               th:attr="data-page=${page.number} < (${page.totalPages} - 1) ? (${page.number}+1) : ${page.number}"
+                               class="item" th:classappend="${page.number} < (${page.totalPages} - 1) ? '': 'disabled'">
+                                <i class="right chevron icon"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+
+<script>
+    $('.m-sidebar').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.ui.dropdown').dropdown({
+        on: 'hover',
+        clearable: true
+    });
+    $('.message .close')
+        .on('click', function () {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+</script>
+<!--/*/</th:block>/*/-->
+
+<script>
+    function page(obj) {
+        $("[name='page']").val($(obj).data("page"));
+        loaddata();
+    }
+
+    function loaddata() {
+        $("#table-container").load(/*[[@{/admin/publish/search}]]*/"/admin/publish/search", {
+            task: $("[name='task']").val(),
+            keyword: $("[name='keyword']").val(),
+            published: $("[name='published']").prop('checked'),
+            page: $("[name='page']").val()
+        });
+    }
+
+    $("#search-btn").click(function () {
+        $("[name='page']").val(0);
+        loaddata();
+    });
+
+</script>
+</body>
+</html>

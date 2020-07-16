@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)" >
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../static/lib/swiper/css/swiper.min.css" th:href="@{/lib/swiper/css/swiper.min.css}">
+    <link rel="Shortcut Icon" href="../static/images/icon.png" type="image/x-icon" th:href="@{/images/icon.png}"/>
+    <title th:replace="${title}">首页 | 关于我们</title>
+</head>
+<body>
+<nav th:fragment="menu(n)" class="ui teal inverted attached segment m-padding-tb-mini m-border m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui header item"><img src="../static/images/icon.png" th:src="@{/images/icon.png}" class="image ui large">曲奇曲怪</h2>
+            <a href="/" th:href="@{/}" class="item m-item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="small home icon"></i>&nbsp;首页</a>
+            <a href="#" th:href="@{/}" class="item m-item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="small image icon"></i>&nbsp;图库</a>
+            <a href="#" th:href="@{/about}" class="item m-item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="small info icon"></i>&nbsp;关于我们</a>
+        </div>
+    </div>
+    <button class="ui teal icon button m-sidebar m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </button>
+</nav>
+
+<footer th:fragment="footer" class="ui teal inverted vertical segment m-padding-tb-massive">
+    <div id="footer-container">
+        <div class="ui center aligned container" th:fragment="footerList" th:unless="${footerQuery} == null">
+            <div class="ui inverted divided stackable grid">
+                <div class="five wide column">
+                    <h4 class="ui inverted header">最新发布</h4>
+                    <div id="new-gift-container">
+                        <div class="ui inverted link list">
+                            <a href="#" class="item" th:each="gift : ${footerQuery.giftList}"
+                               th:text="${gift.title}" th:href="@{/detail/{id}(id=${gift.id})}">用户故事（User Story）</a>
+                            <!--/*-->
+                            <a href="#" class="item">用户故事（User Story）</a>
+                            <a href="#" class="item">用户故事（User Story）</a>
+                            <!--*/-->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="five wide column">
+                    <h4 class="ui inverted header">情侣双方</h4>
+                    <div class="ui inverted link list">
+                        <div class="ui" th:each="user : ${footerQuery.users}" style="margin-top: 5px">
+                            <a href="#" class="ui orange header item"
+                               th:text="${user.nickName}" th:href="@{/user/{id}(id=${user.id})}">曲怪曲怪</a>
+                        </div>
+                        <!--/*-->
+                        <div class="ui orange header" style="margin-top: 5px">
+                            <a href="#" class="item">曲奇曲奇</a>
+                        </div>
+                        <!--*/-->
+                    </div>
+                </div>
+                <div class="six wide column">
+                    <h4 class="ui inverted header">曲奇曲怪 简介</h4>
+                    <p class="item m-opacity-mini" th:text="${footerQuery.description}">曲奇是臭猪，曲怪是香猪，嘿嘿哈嘿!!!</p>
+                </div>
+            </div>
+            <div class="ui inverted section divider"></div>
+            <p class="m-footer-text">Copyright © 2020 - 2020 &nbsp;&nbsp; <b class="ui header grey">曲奇曲怪</b> &nbsp;&nbsp;Designed
+                by LiYang</p>
+        </div>
+    </div>
+</footer>
+
+
+<th:block th:fragment="script">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script src="../static/lib/swiper/js/swiper.js" th:src="@{/lib/swiper/js/swiper.js}"> </script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+    <script>
+        $('#footer-container').load(/*[[@{/footer}]]*/"/footer");
+
+        $('.m-sidebar').click(function () {
+            $('.m-item').toggleClass('m-mobile-hide');
+        });
+    </script>
+</th:block>
+
+
+</body>
+</html>

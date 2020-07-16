@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head  th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+    <link rel="Shortcut Icon" href="../../static/images/icon.png" type="image/x-icon"/>
+    <title>管理 | 校验</title>
+</head>
+<body>
+<div class="ui compact success message animated slideInRight m-publish-message" th:unless="${#strings.isEmpty(message)}">
+    <i class="close icon"></i>
+    <div class="header">提示</div>
+    <p th:text="${message}">恭喜操作成功</p>
+</div>
+<nav th:replace="admin/_fragments :: menu(4, ${session.user})" class="ui teal inverted attached segment m-padding-tb-mini m-border m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui header item"><img src="../../static/images/icon.png" class="image ui large">曲奇曲怪</h2>
+            <a href="/" class="item m-item m-mobile-hide"><i class="small home icon"></i>&nbsp;首页</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small bell icon"></i>&nbsp;任务审核</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small volume up icon"></i>&nbsp;任务发布</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small gift icon"></i>&nbsp;礼物</a>
+            <div class="right m-item menu m-mobile-hide-always">
+                <div class="ui hidden divider"></div>
+                <div class="right m-item menu">
+                    <a href="/" target="_blank" class="item index-icon"><i class="linkify icon"></i></a>
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img src="https://picsum.photos/id/1/100/100?image=1" alt="" class="ui avatar image">
+                            userName
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" class="item" th:href="@{/admin/setting}"><i class="blue mini user icon"></i>个人资料</a>
+                            <a href="#" class="item" th:href="@{/admin/logout}"><i class="blue mini power icon"></i>退出登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="ui teal icon button m-sidebar m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </button>
+</nav>
+<div class="m-container m-padded-tb-big">
+    <div class="ui  container">
+        <div class="ui horizontal divider header m-padding-tb">
+            审核
+        </div>
+        <div class="ui stackable grid">
+            <div class="four wide column" th:each="gift : ${auditing}">
+                <div class="ui raised card">
+                    <div class="content">
+                        <i class="ui right floated thumbtack icon"></i>
+                        <h3 class="header" style="margin: 0 0 5px 0" th:text="${gift.keyword.name}">
+                            口红
+                        </h3>
+                        <div class="meta"
+                             th:text="${gift.state} == null ? ${#calendars.format(gift.updateTime, 'yyyy-MM-dd')} : '审核状态：' + ${gift.state}">
+                            2019-02-01
+                        </div>
+                        <div class="description">
+                            <i class="ui edit icon"></i><span th:text="${gift.task}">完成教师资格证</span>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <div>提交时间：<span th:text="${#calendars.format(gift.createTime, 'yyyy-MM-dd')}">2017-02-03</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="ui horizontal divider header m-padding-tb">
+            已获得
+        </div>
+        <div class="ui stackable grid">
+            <div class="four wide column" th:each="gift : ${hadGet}">
+                <div class="ui raised card">
+                    <div class="content">
+                        <i class="ui right floated info icon"></i>
+                        <h3 class="header" style="margin: 0 0 5px 0" th:text="${gift.keyword.name}">
+                            口红
+                        </h3>
+                        <div class="meta" th:text="${#calendars.format(gift.updateTime, 'yyyy-MM-dd')}">
+                            2019-02-01
+                        </div>
+                        <div class="description" th:text="${gift.task}">
+                            <i class="ui edit icon"></i>完成教师资格证
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <div>获得时间：<span th:text="${#calendars.format(gift.auditTime, 'yyyy-MM-dd')}">2017-02-03</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<script>
+    $('.m-sidebar').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.ui.dropdown').dropdown({
+        on: 'hover',
+        clearable: true
+    });
+    $('.message .close')
+        .on('click', function () {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+</script>
+<!--/*/</th:block>/*/-->
+
+</body>
+</html>

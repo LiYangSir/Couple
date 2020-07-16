@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../../static/lib/swiper/css/swiper.min.css" th:href="@{/lib/swiper/css/swiper.min.css}">
+    <link rel="Shortcut Icon" href="../../static/images/icon.png" type="image/x-icon"/>
+    <title>首页 | 曲奇曲怪</title>
+</head>
+<body>
+
+<div class="ui compact success message animated slideInRight m-publish-message" th:unless="${#strings.isEmpty(message)}">
+    <i class="close icon"></i>
+    <div class="header">提示</div>
+    <p th:text="${message}">恭喜操作成功</p>
+</div>
+
+<nav th:replace="admin/_fragments :: menu(1, ${session.user})" class="ui teal inverted attached segment m-padding-tb-mini m-border m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui header item"><img src="../../static/images/icon.png" class="image ui large">曲奇曲怪</h2>
+            <a href="/" class="item m-item m-mobile-hide"><i class="small home icon"></i>&nbsp;个人中心</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small bell icon"></i>&nbsp;任务审核</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small volume up icon"></i>&nbsp;任务发布</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small gift icon"></i>&nbsp;礼物</a>
+            <div class="right m-item menu m-mobile-hide-always">
+                <div class="ui hidden divider"></div>
+                <div class="right m-item menu">
+                    <a href="/" target="_blank" class="item index-icon"><i class="linkify icon"></i></a>
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img src="https://picsum.photos/id/1/100/100?image=1" alt="" class="ui avatar image">
+                            userName
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" class="item" th:href="@{/admin/setting}"><i class="blue mini user icon"></i>个人资料</a>
+                            <a href="#" class="item" th:href="@{/admin/logout}"><i class="blue mini power icon"></i>退出登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="ui teal icon button m-sidebar m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </button>
+</nav>
+
+<div class="m-container m-padded-tb-big">
+    <div class="ui grid ui three column stackable container">
+        <div class="ui column" th:each="gift : ${gifts}">
+            <a class="ui card m-card-center" th:href="@{/admin/detail/{id}(id=${gift.id})}" href="#">
+                <div class="ui ribbon label m-card-label" th:text="${gift.state}"
+                th:classappend="${gift.auditFlag} ? 'orange' : (${gift.achieveFlag} ? 'blue' : 'red')">已完成</div>
+                <img src="../../static/images/lena.png" th:src="@{${gift.firstPicUrl}}" class="ui image m-image">
+                <div class="content">
+                    <div class="header">￥<span th:text="${gift.integral}">100</span></div>
+                    <div class="meta">
+                        <span class="right floated time"><i class="calendar teal icon"></i><span th:text="${#calendars.format(gift.createTime, 'yyyy-MM-dd')}">2017-01-10</span></span>
+                        <span class="user"><i class="user teal icon"></i><span th:text="${gift.publishUser.nickName}">蒙佳琪</span></span>
+                    </div>
+
+                    <div class="description" th:text="${gift.title}">
+                        innisfree/悦诗风吟蜜吻真彩唇膏口红哑光丝绒 9号温婉杜鹃 持久
+                    </div>
+                </div>
+                <div class="extra content middle center">
+                    <i class="tasks icon"></i>条件: <span th:text="${gift.task}">完成教师资格证</span>
+                </div>
+            </a>
+        </div>
+        <!--/*-->
+        <div class="ui column" th:each="gift : ${gifts}">
+            <a class="ui card m-card-center" th:href="@{/admin/detail/{id}(id=${gift.id})}" href="#">
+                <div class="ui ribbon label m-card-label" th:text="${gift.state}"
+                     th:classappend="${gift.auditFlag} ? 'orange' : ${gift.achieveFlag} ? 'blue' : 'red'">已完成</div>
+                <img src="../../static/images/4.jpg" th:src="@{${gift.firstPicUrl}}" class="ui image m-image">
+                <div class="content">
+                    <div class="header">￥<span th:text="${gift.integral}">100</span></div>
+                    <div class="meta">
+                        <span class="right floated time"><i class="calendar teal icon"></i><span th:text="${#calendars.format(gift.createTime, 'yyyy-MM-dd')}">2017-01-10</span></span>
+                        <span class="user"><i class="user teal icon"></i><span th:text="${gift.publishUser.nickName}">蒙佳琪</span></span>
+                    </div>
+
+                    <div class="description" th:text="${gift.title}">
+                        innisfree/悦诗风吟蜜吻真彩唇膏口红哑光丝绒 9号温婉杜鹃 持久
+                    </div>
+                </div>
+                <div class="extra content middle center">
+                    <i class="tasks icon"></i>条件: <span th:text="${gift.task}">完成教师资格证</span>
+                </div>
+            </a>
+        </div>
+        <div class="ui column" th:each="gift : ${gifts}">
+            <a class="ui card m-card-center" th:href="@{/admin/detail/{id}(id=${gift.id})}" href="#">
+                <div class="ui ribbon label m-card-label" th:text="${gift.state}"
+                     th:classappend="${gift.auditFlag} ? 'orange' : ${gift.achieveFlag} ? 'blue' : 'red'">已完成</div>
+                <img src="../../static/images/4.jpg" th:src="@{${gift.firstPicUrl}}" class="ui image m-image">
+                <div class="content">
+                    <div class="header">￥<span th:text="${gift.integral}">100</span></div>
+                    <div class="meta">
+                        <span class="right floated time"><i class="calendar teal icon"></i><span th:text="${#calendars.format(gift.createTime, 'yyyy-MM-dd')}">2017-01-10</span></span>
+                        <span class="user"><i class="user teal icon"></i><span th:text="${gift.publishUser.nickName}">蒙佳琪</span></span>
+                    </div>
+
+                    <div class="description" th:text="${gift.title}">
+                        innisfree/悦诗风吟蜜吻真彩唇膏口红哑光丝绒 9号温婉杜鹃 持久
+                    </div>
+                </div>
+                <div class="extra content middle center">
+                    <i class="tasks icon"></i>条件: <span th:text="${gift.task}">完成教师资格证</span>
+                </div>
+            </a>
+        </div>
+        <!--*/-->
+    </div>
+</div>
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<script src="../../static/lib/swiper/js/swiper.min.js"> </script>
+<script>
+    $('.m-sidebar').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.ui.dropdown').dropdown({
+        on: 'hover',
+        clearable: true
+    });
+    $('.message .close')
+        .on('click', function () {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+</script>
+<!--/*/</th:block>/*/-->
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)" >
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../../static/lib/swiper/css/swiper.min.css" th:href="@{/lib/swiper/css/swiper.min.css}">
+    <link rel="stylesheet" href="../../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="Shortcut Icon" href="../../static/images/icon.png" type="image/x-icon" th:href="@{/images/icon.png}"/>
+    <title th:replace="${title}">首页 | 关于我们</title>
+</head>
+<body>
+<nav th:fragment="menu(n, user)" class="ui teal inverted attached segment m-padding-tb-mini m-border m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui header item"><img src="../../static/images/icon.png" th:src="@{/images/icon.png}" class="image ui large">曲奇曲怪</h2>
+            <a href="/" th:href="@{/admin/index}" class="item m-item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="small home icon"></i>&nbsp;个人主页</a>
+            <a href="#" th:href="@{/admin/check}" class="item m-item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="small bell icon"></i>&nbsp;任务审核</a>
+            <a href="#" th:href="@{/admin/publish}" class="item m-item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="small volume up icon"></i>&nbsp;任务发布</a>
+            <a href="#" th:href="@{/admin/gift}" class="item m-item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="small gift icon"></i>&nbsp;礼物</a>
+            <div class="right m-item menu m-mobile-hide-always">
+                <div class="ui hidden divider"></div>
+                <div class="right m-item menu m-mobile-hide">
+                    <a href="/" target="_blank" class="item index-icon"><i class="linkify icon"></i></a>
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img src="https://picsum.photos/id/1/100/100?image=1" id="nav-avatar" alt="" th:src="@{${user.getAvatar()}}" class="ui avatar image" th:text="${user.getNickName()}">
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" class="item" th:href="@{/admin/setting}"><i class="blue mini user icon"></i>个人资料</a>
+                            <a href="#" class="item" th:href="@{/admin/logout}"><i class="blue mini power icon"></i>退出登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="ui teal icon button m-sidebar m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </button>
+</nav>
+
+<th:block th:fragment="script">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script src="../static/lib/swiper/js/swiper.js" th:src="@{/lib/swiper/js/swiper.js}"> </script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+    <script>
+        $('.m-sidebar').click(function () {
+            $('.m-item').toggleClass('m-mobile-hide');
+        });
+        $('.ui.dropdown').dropdown({
+            on: 'hover',
+            clearable: true
+        });
+        $('.message .close')
+            .on('click', function () {
+                $(this)
+                    .closest('.message')
+                    .transition('fade');
+            });
+    </script>
+</th:block>
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css">
+    <link rel="stylesheet" href="../static/lib/swiper/css/swiper.min.css">
+    <link rel="Shortcut Icon" href="../static/images/icon.png" type="image/x-icon"/>
+    <title>首页 | 关于我们</title>
+</head>
+<body>
+<nav th:replace="_fragments :: menu(3)" class="ui teal inverted attached segment m-padding-tb-mini m-border m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui header item"><img src="../static/images/icon.png" class="image ui large">曲奇曲怪</h2>            <a href="/" class="item m-item m-mobile-hide"><i class="small home icon"></i>&nbsp;首页</a>
+            <a href="#" class="item m-item m-mobile-hide"><i class="small image icon"></i>&nbsp;图库</a>
+            <a href="#" class="item m-item m-mobile-hide active"><i class="small info icon"></i>&nbsp;关于我们</a>
+        </div>
+    </div>
+    <button class="ui teal icon button m-sidebar m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </button>
+</nav>
+<div class="m-container m-padded-tb-big">
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <div class="eleven wide column">
+                <div class="ui basic segment">
+                    <div class="ui two column stackable grid">
+                        <div class="column" th:each="user : ${users}">
+                            <div class="ui card m-card-center">
+                                <div class="image">
+                                    <img src="../static/images/image.png" th:src="@{${user.getAvatar()}}" class="m-image">
+                                </div>
+                                <div class="content">
+                                    <a class="header" th:text="${user.nickName}">曲怪曲怪</a>
+                                    <div class="meta">
+                                        <span class="date">Joined in <span th:text="${#dates.format(user.getCreateTime(), 'yyyy')}">2014</span></span>
+                                    </div>
+
+                                    <div class="description" th:text="${user.description}">
+                                        喜欢把分享当成乐趣
+                                    </div>
+                                </div>
+                                <div class="extra content">
+                                    <i class="envelope icon"></i>email: <span th:text="${user.email}">1315223452@qq.com</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/*-->
+                        <div class="column">
+                            <div class="ui card m-card-center">
+                                <div class="image">
+                                    <img src="../static/images/image.png" th:src="@{${user.getAvatar()}}" class="m-image">
+                                </div>
+                                <div class="content">
+                                    <a class="header" th:text="${user.nickName}">曲怪曲怪</a>
+                                    <div class="meta">
+                                        <span class="date">Joined in <span th:text="${#dates.format(user.getCreateTime(), 'yyyy')}">2014</span></span>
+                                    </div>
+
+                                    <div class="description" th:text="${user.selfIntroduction}">
+                                        喜欢把分享当成乐趣
+                                    </div>
+                                </div>
+                                <div class="extra content">
+                                    <i class="envelope icon"></i>email: <span th:text="${user.email}">1315223452@qq.com</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--*/-->
+                    </div>
+                </div>
+            </div>
+            <div class="five wide column">
+                <div id="aboutMe">
+                    <div class="ui top attached tertiary segment">
+                        <div class="ui header">关于 曲奇曲怪</div>
+                    </div>
+                    <div class="ui attached segment">
+                        <div class="ui two column grid m-padded-tb-big">
+                            <div class="center aligned column" th:each="user : ${users}">
+                                <i class="ui large mars icon"></i>
+                                <span class="ui header" th:text="${user.nickName}">曲怪</span>
+                                <div class="m-margin-top">
+                                    <i class="ui location arrow icon"></i> <span th:text="${user.location}">衡水</span>
+                                </div>
+                            </div>
+                            <!--/*-->
+                            <div class="center aligned column">
+                                <i class="ui large venus icon"></i>
+                                <span class="ui header">曲奇</span>
+                                <div class="m-margin-top">
+                                    <i class="ui location arrow icon"></i> 兰州
+                                </div>
+                            </div>
+                            <!--*/-->
+                        </div>
+                        <p class="m-text" th:text="${webBasic.description}">本科同时就读于武汉理工大学，在中南财经政法大学辅修的时候相识，现在都在读研究生，但是她在广州，而我在哈尔滨。天南地北！</p>
+                    </div>
+                    <div class="ui bottom attached segment">
+                        <div class="ui header" style="margin-bottom: 5px">情侣数据</div>
+                        <div class="ui large blue label m-margin-top">
+                            相识
+                            <div class="detail" th:text="${#calendars.format(webBasic.missDate, 'yyyy-MM-dd')}">2017-02-01</div>
+                        </div>
+                        <div class="ui large blue label m-margin-top">
+                            共度过
+                            <div class="detail"><span th:text="${webBasic.missTime} + 1">100</span>天</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer th:replace="_fragments :: footer" class="ui teal inverted vertical segment m-padding-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="five wide column">
+                <h4 class="ui inverted header">最新文章</h4>
+                <div class="ui inverted link list">
+                    <span>
+                        <a href="#" class="item">用户故事（User Story）</a>
+                    </span>
+                    <!--/*-->
+                    <a href="#" class="item">用户故事（User Story）</a>
+                    <a href="#" class="item">用户故事（User Story）</a>
+                    <!--*/-->
+                </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header">友情链接</h4>
+                <div class="ui inverted link list">
+                    <div class="ui">
+                        <a href="#" class="item">曲怪曲怪</a>
+                        &nbsp;
+                        <a href="#" class="item">曲奇曲奇</a>
+                    </div>
+                    <a href="#" class="item">日志</a>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted header">曲奇曲怪 简介</h4>
+                <p class="item m-opacity-mini">曲奇是臭猪，曲怪是香猪，嘿嘿哈嘿!!!</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-footer-text">Copyright © 2020 - 2020 &nbsp;&nbsp; <b class="ui header grey">曲奇曲怪</b> &nbsp;&nbsp;Designed
+            by LiYang</p>
+    </div>
+</footer>
+<!--/*/<th:block th:replace="_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<script src="../static/lib/swiper/js/swiper.min.js"> </script>
+<script>
+    $('.m-sidebar').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+</script>
+<!--/*/</th:block>/*/-->
+
+</body>
+</html>

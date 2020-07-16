@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+<h1>错误</h1>
+<div>
+    <div th:utext="'&lt;!--'" th:remove="tag"></div>
+    <div th:utext="'Failed Request URL : ' + ${url}" th:remove="tags"></div>
+    <div th:utext="'Exception message  : ' + ${exception.message}" th:remove="tags"></div>
+    <ul th:remove="tag">
+        <li th:each="st : ${exception.stackTrace}" th:remove="tags"><span th:text="${st}" th:remove="tags"></span></li>
+    </ul>
+    <div th:utext="'&gt;!--'" th:remove="tags"></div>
+</div>
+</body>
+</html>
