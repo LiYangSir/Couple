@@ -14,7 +14,7 @@
 <nav th:fragment="menu(n, user)" class="ui teal inverted attached segment m-padding-tb-mini m-border m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
-            <h2 class="ui header item"><img src="../../static/images/icon.png" th:src="@{/images/icon.png}" class="image ui large">曲奇曲怪</h2>
+            <h2 class="ui header item m-padding-tb-small"><img src="../../static/images/icon.png" th:src="@{/images/icon.png}" class="image ui large">曲奇曲怪</h2>
             <a href="/" th:href="@{/admin/index}" class="item m-item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="small home icon"></i>&nbsp;个人主页</a>
             <a href="#" th:href="@{/admin/check}" class="item m-item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="small bell icon"></i>&nbsp;任务审核</a>
             <a href="#" th:href="@{/admin/publish}" class="item m-item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="small volume up icon"></i>&nbsp;任务发布</a>

@@ -6,6 +6,7 @@ import com.quqiququai.po.WebBasic;
 import com.quqiququai.service.GiftService;
 import com.quqiququai.service.UserService;
 import com.quqiququai.service.WebBasicService;
+import com.quqiququai.utils.SaveAndGetPicUtils;
 import com.quqiququai.vo.FooterQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,9 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model){
         List<Gift> gifts = giftService.listAllGift();
+        String indexPictures = webBasicService.getWebBasic(1L).getIndexPictures();
+        List<String> strings = SaveAndGetPicUtils.listIndexPictures(indexPictures);
+        model.addAttribute("indexPic", strings);
         model.addAttribute("gifts", gifts);
         return "index";
     }

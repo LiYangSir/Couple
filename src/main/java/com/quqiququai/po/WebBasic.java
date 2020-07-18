@@ -15,6 +15,8 @@ public class WebBasic {
     String bottomDescription;
     String urls;
 
+    String indexPictures;
+
     @Temporal(TemporalType.TIMESTAMP)
     Date missDate = new Date();
 
@@ -80,6 +82,14 @@ public class WebBasic {
         this.missTime = missTime;
     }
 
+    public String getIndexPictures() {
+        return indexPictures;
+    }
+
+    public void setIndexPictures(String indexPictures) {
+        this.indexPictures = indexPictures;
+    }
+
     @Override
     public String toString() {
         return "WebBasic{" +
@@ -87,6 +97,7 @@ public class WebBasic {
                 ", description='" + description + '\'' +
                 ", bottomDescription='" + bottomDescription + '\'' +
                 ", urls='" + urls + '\'' +
+                ", indexPictures='" + indexPictures + '\'' +
                 ", missDate=" + missDate +
                 ", bottomUrls=" + bottomUrls +
                 ", missTime=" + missTime +

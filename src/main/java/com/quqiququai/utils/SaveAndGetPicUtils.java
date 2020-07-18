@@ -5,7 +5,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class SaveAndGetPicUtils {
 
@@ -49,6 +52,11 @@ public class SaveAndGetPicUtils {
         }
         String str = dest.toString();
         return "/upload" + str.split("upload")[1];
+    }
+
+    public static List<String> listIndexPictures(String urls) {
+        String[] split = urls.split(";");
+        return Arrays.asList(split);
     }
 
     public static void main(String[] args) {

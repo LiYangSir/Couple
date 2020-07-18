@@ -13,7 +13,7 @@
 <nav th:fragment="menu(n)" class="ui teal inverted attached segment m-padding-tb-mini m-border m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
-            <h2 class="ui header item"><img src="../static/images/icon.png" th:src="@{/images/icon.png}" class="image ui large">曲奇曲怪</h2>
+            <h2 class="ui header item m-padding-tb-small"><img src="../static/images/icon.png" th:src="@{/images/icon.png}" class="image ui large">曲奇曲怪</h2>
             <a href="/" th:href="@{/}" class="item m-item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="small home icon"></i>&nbsp;首页</a>
             <a href="#" th:href="@{/}" class="item m-item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="small image icon"></i>&nbsp;图库</a>
             <a href="#" th:href="@{/about}" class="item m-item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="small info icon"></i>&nbsp;关于我们</a>
